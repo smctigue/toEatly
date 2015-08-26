@@ -26,14 +26,30 @@ function getFoods() {
   $.get("/foods", function(res){ 
     var foods = JSON.parse(res).reverse();
     // grab foods template
-    template = _.template($("#foods-template").html());
-    // input foods into template and append to parent
-    foodItems = foods.map(function(food) {
-      return template(food);
-    });
-    // clear content (for repeated use)
-    $("#food-ul").html("");
-    // append foods to ul
-    $("#food-ul").append(foodItems);
+    renderFoods(foods)
+  });
+}
+
+function renderFoods(foods) {
+  template = _.template($("#foods-template").html());
+  // input foods into template and append to parent
+  foodItems = foods.map(function(food) {
+    return template(food);
+  });
+  // clear content (for repeated use)
+  $("#food-ul").html("");
+  // append foods to ul
+  $("#food-ul").append(foodItems);
+}
+
+function deleteFood(context) {
+  var foodId = $(context).data().id;
+  $.ajax({
+    url: '/foods/' + foodId,
+    type: 'DELETE',
+    success: function(res) {
+      // once successfull, re-render all foods
+      getFoods();
+    }
   });
 }
