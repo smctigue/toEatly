@@ -1,6 +1,18 @@
-// On page load
+// On page load || document.ready
 $(function() {
   getFoods();
+  // set event listeners
+  $('#food-form').on('submit', function(e) {
+    // prevent form submission
+    e.preventDefault();
+    //grab data from form
+    formData = $(this).serialize();
+    // post data to server w/ AJAX
+    $.post("/foods", formData).done(function() {
+      // when food ahs been succesfully do something...
+      getFoods();
+    });
+  })
 });
 
 // Function definitions

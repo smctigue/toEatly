@@ -33,6 +33,14 @@ app.get("/foods", function (req, res){
   res.send(JSON.stringify(foods));
 });
 
+app.post('/foods', function (req, res){
+    var food = req.body;
+    food.id = foods[foods.length - 1].id + 1;
+    foods.push(food);
+    //sends back item just created
+    res.send(food);
+});
+
 app.listen(3000, function (){
   console.log("listening on port 3000");
 });
