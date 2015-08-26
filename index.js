@@ -27,6 +27,10 @@ app.get("/", function (req, res) {
 	res.sendFile(views + "/index.html");
 })
 
+app.get("/foods", function (req, res) {
+	res.send(foods);
+});
+
 //start server on port 3000
 app.listen(3000, function () {
 	console.log("Go to localhost:3000/");
